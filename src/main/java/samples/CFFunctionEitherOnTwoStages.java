@@ -1,29 +1,30 @@
 package samples;
 
-import org.junit.Assert;
-import utils.AsyncSimulator;
+import utils.DelaySimulator;
 
 import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by marcin.bracisiewicz
  */
-public class CFFunctionOnTwoStages {
+public class CFFunctionEitherOnTwoStages {
 
+    //The below example creates a CompletableFuture that applies a Function to the result of
+    //either of two previous stages (no guarantees on which one will be passed to the Function).
     public static void applyToEitherExample() {
         String original = "Message";
 
         //use Java9 delayedUpperCase(s) - own method
         CompletableFuture cf1 = CompletableFuture.completedFuture(original)
                 .thenApplyAsync(string -> {
-                    AsyncSimulator.sleep(500);
+                    DelaySimulator.sleep(200);
                     return string.toUpperCase();
                 });
 
         CompletableFuture cf2 = cf1.applyToEither(
                 CompletableFuture.completedFuture(original)
                 .thenApplyAsync(string -> {
-                    AsyncSimulator.sleep(300);
+                    DelaySimulator.sleep(300);
                     return string.toLowerCase();
                 }), s -> s + " from applyToEither"
         );

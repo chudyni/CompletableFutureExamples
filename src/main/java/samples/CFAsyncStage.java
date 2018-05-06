@@ -1,7 +1,7 @@
 package samples;
 
 import org.junit.Assert;
-import utils.AsyncSimulator;
+import utils.DelaySimulator;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -17,11 +17,11 @@ public class CFAsyncStage {
         //Other CompletionStage implementations can override this behaviour.
         CompletableFuture cf = CompletableFuture.runAsync(() -> {
             Assert.assertTrue(Thread.currentThread().isDaemon());
-            AsyncSimulator.sleep(500);
+            DelaySimulator.sleep(500);
         });
 
         Assert.assertFalse(cf.isDone());
-        AsyncSimulator.sleep(1000);
+        DelaySimulator.sleep(1000);
         Assert.assertTrue(cf.isDone());
     }
 

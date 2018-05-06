@@ -3,7 +3,7 @@ package utils;
 /**
  * Created by marcin.bracisiewicz
  */
-public class AsyncSimulator {
+public class DelaySimulator {
 
     public static void sleep(long ms) {
         try {

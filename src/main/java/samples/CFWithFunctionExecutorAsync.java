@@ -1,7 +1,7 @@
 package samples;
 
 import org.junit.Assert;
-import utils.AsyncSimulator;
+import utils.DelaySimulator;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -27,7 +27,7 @@ public class CFWithFunctionExecutorAsync {
                 .thenApplyAsync(string -> {
                     Assert.assertTrue(Thread.currentThread().getName().startsWith("custom-executor-"));
                     Assert.assertFalse(Thread.currentThread().isDaemon());
-                    AsyncSimulator.sleep(500);
+                    DelaySimulator.sleep(500);
                     return string.toUpperCase();
                 },
                         executor);

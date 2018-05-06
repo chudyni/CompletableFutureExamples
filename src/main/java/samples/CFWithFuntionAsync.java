@@ -1,7 +1,7 @@
 package samples;
 
 import org.junit.Assert;
-import utils.AsyncSimulator;
+import utils.DelaySimulator;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,7 +16,7 @@ public class CFWithFuntionAsync {
         CompletableFuture cf = CompletableFuture.completedFuture("message")
                 .thenApplyAsync(string -> {
                     Assert.assertTrue(Thread.currentThread().isDaemon());
-                    AsyncSimulator.sleep(1000);
+                    DelaySimulator.sleep(1000);
                     return string.toUpperCase();
                 });
 

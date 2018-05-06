@@ -41,7 +41,29 @@ public class Run {
 
         // 10. Applying a Function to the Result of Either of Two Completed Stages
         // refactor to Java 9
-        CFFunctionOnTwoStages.applyToEitherExample();
+        CFFunctionEitherOnTwoStages.applyToEitherExample();
+
+        // 11. Consuming the Result of Either of Two Completed Stages
+        // refactor to Java 9
+        CFConsumerEitherOnTwoStages.applyToEitherExample();
+
+        // 12. Running a Runnable Upon Completion of Both Stages
+        CFRunnableBothOnTwoStages.runAfterBothExample();
+
+        // 13. Accepting the Results of Both Stages in a BiConsumer
+        CFBiConsumerBothOnTwoStages.thenAcceptBothExample();
+
+        // 14. Applying a BiFunction on Results of Both Stages
+        CFBiFunctionBothOnTwoStages.thenCombineExample();
+
+        // 15. Asynchronously Applying a BiFunction on Results of Both Stages
+        CFBiFunctionBothOnTwoStagesAsync.thenCombineAsyncExample();
+
+        // 16. Composing CompletableFutures
+        CFCompose.thenComposeExample();
+
+        // 17. Creating a Stage That Completes When Any of Several Stages Completes
+        CFStageAfterAnyStageCompleted.anyOfExample();
 
     }
 }
