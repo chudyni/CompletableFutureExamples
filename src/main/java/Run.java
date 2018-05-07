@@ -32,12 +32,10 @@ public class Run {
         CFWithConusmerAsync.thenAcceptAsyncExample();
 
         // 8. Completing a Computation Exceptionally
-        // NEEDS JAVA 9
-//        CFComputationExceptionally.completeExceptionallyExample();
+        CFComputationExceptionally.completeExceptionallyExample();
 
         // 9. Canceling a Computation
-        // NEEDS JAVA 9
-//        CFComputationExceptionallyCancel.cancelExample();
+        CFComputationExceptionallyCancel.cancelExample();
 
         // 10. Applying a Function to the Result of Either of Two Completed Stages
         // refactor to Java 9
@@ -65,5 +63,12 @@ public class Run {
         // 17. Creating a Stage That Completes When Any of Several Stages Completes
         CFStageAfterAnyStageCompleted.anyOfExample();
 
+        // 18. Creating a Stage That Completes When All Stages Complete
+        CFStageAfterAllStagesCompleted.allOfExample();
+
+        // 19. Creating a Stage That Completes Asynchronously When All Stages Complete
+        CFStageAfterAllStagesCompletedAsync.allOfAsyncExample();
+
+        // 20. Real Life Example
     }
 }

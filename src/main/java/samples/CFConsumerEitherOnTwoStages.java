@@ -1,5 +1,6 @@
 package samples;
 
+import org.junit.Assert;
 import utils.DelaySimulator;
 
 import java.util.concurrent.CompletableFuture;
@@ -27,9 +28,6 @@ public class CFConsumerEitherOnTwoStages {
                 );
 
         cf.join();
-        //Java 9
-//        Assert.assertTrue("Result was empty", result.toString().endsWith("acceptEither"));
-        System.out.println(result);
-
+        Assert.assertTrue("Result was empty", result.toString().endsWith("acceptEither"));
     }
 }

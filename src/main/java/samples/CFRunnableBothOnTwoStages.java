@@ -27,6 +27,6 @@ public class CFRunnableBothOnTwoStages {
                 );
 
         Assert.assertTrue("Result was empty", result.length() > 0);
-        System.out.println(result);
+        Assert.assertEquals("MESSAGEmessage done", result.toString());
     }
 }

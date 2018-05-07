@@ -2,10 +2,12 @@ package samples;
 
 import org.junit.Assert;
 import utils.DelaySimulator;
+import utils.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -21,22 +23,21 @@ public class CFStageAfterAnyStageCompleted {
     // which processes the result (asserting that the result is uppercase).
     public static void anyOfExample() {
         StringBuilder result = new StringBuilder();
-        List messages = Arrays.asList("a", "b", "c");
+        List<String> messages = Arrays.asList("a", "b", "c");
 
-        List<CompletableFuture> futures = (List<CompletableFuture>) messages.stream()
+        List<CompletableFuture<String>> futures = messages.stream()
                 .map(msg -> CompletableFuture.completedFuture(msg)
-//                        .thenApply(string -> {
-//                            DelaySimulator.sleep(200);
-//                            return (String)string.toUpperCase();
-//                        })
-                        .thenApply(string -> string.toString())
+                        .thenApply(string -> {
+                            DelaySimulator.sleep(200);
+                            return string.toUpperCase();
+                        })
                 )
                 .collect(Collectors.toList());
 
         CompletableFuture.anyOf(futures.toArray(new CompletableFuture[futures.size()]))
                 .whenComplete((res, th) -> {
                         if(th == null) {
-                            Assert.assertTrue(isUpperCase((String) res));
+                            Assert.assertTrue(StringUtils.isUpperCase((String) res));
                             result.append(res);
                         }
                 });
@@ -44,12 +45,5 @@ public class CFStageAfterAnyStageCompleted {
         Assert.assertTrue("Result was empty", result.length() > 0);
     }
 
-    private static boolean isUpperCase(String word) {
-        for(char c : word.toCharArray()) {
-            if(!Character.isUpperCase(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
+
 }

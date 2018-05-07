@@ -1,8 +1,10 @@
 package samples;
 
+import org.junit.Assert;
 import utils.DelaySimulator;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by marcin.bracisiewicz
@@ -15,22 +17,29 @@ public class CFFunctionEitherOnTwoStages {
         String original = "Message";
 
         //use Java9 delayedUpperCase(s) - own method
+//        CompletableFuture cf1 = CompletableFuture.completedFuture(original)
+//                .thenApplyAsync(string -> {
+//                    DelaySimulator.sleep(200);
+//                    return string.toUpperCase();
+//                });
         CompletableFuture cf1 = CompletableFuture.completedFuture(original)
-                .thenApplyAsync(string -> {
-                    DelaySimulator.sleep(200);
-                    return string.toUpperCase();
-                });
+                .thenApplyAsync(String::toUpperCase,
+                        CompletableFuture.delayedExecutor(1, TimeUnit.SECONDS));
 
-        CompletableFuture cf2 = cf1.applyToEither(
+
+//        CompletableFuture cf2 = cf1.applyToEither(
+//                CompletableFuture.completedFuture(original)
+//                .thenApplyAsync(string -> {
+//                    DelaySimulator.sleep(300);
+//                    return string.toLowerCase();
+//                }), s -> s + " from applyToEither"
+//        );
+        CompletableFuture<String> cf2 = cf1.applyToEither(
                 CompletableFuture.completedFuture(original)
-                .thenApplyAsync(string -> {
-                    DelaySimulator.sleep(300);
-                    return string.toLowerCase();
-                }), s -> s + " from applyToEither"
+                        .thenApplyAsync(String::toLowerCase,
+                                CompletableFuture.delayedExecutor(1, TimeUnit.SECONDS)), s -> s + " from applyToEither"
         );
 
-        //Java 9
-//        Assert.assertTrue(cf2.join().endsWith(" from applyToEither"));
-        System.out.println(cf2.join());
+        Assert.assertTrue(cf2.join().endsWith(" from applyToEither"));
     }
 }
